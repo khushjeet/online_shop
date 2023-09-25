@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:uber_shop/view/screens/maps/google_map_page.dart';
 
 class LocationWodgets extends StatelessWidget {
   const LocationWodgets({super.key});
@@ -35,7 +37,12 @@ class LocationWodgets extends StatelessWidget {
                 ),
               ),
             ),
-          )
+          ),
+          TextButton(
+              onPressed: () {
+                Get.off(const GoogleMapPage());
+              },
+              child: const Text("Pick Current Location"))
         ],
       ),
     );

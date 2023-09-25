@@ -1,19 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uber_shop/provider/cart_provider.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends ConsumerStatefulWidget {
   final dynamic productData;
 
   const ProductDetailScreen({super.key, this.productData});
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  // ignore: library_private_types_in_public_api
+  _ProductDetailScreenState createState() => _ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   int imageIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final _cartProvider = ref.read(cartProvider.notifier);
     return Scaffold(
       appBar: AppBar(
         elevation: 4,
@@ -185,28 +189,43 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Icon(
-                      CupertinoIcons.shopping_cart,
-                      color: Colors.pink,
-                    ),
-                    Text(
-                      "ADD TO CART",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
+            InkWell(
+              onTap: () {
+                _cartProvider.addProductToCart(
+                    widget.productData['productName'],
+                    widget.productData['productId'],
+                    widget.productData['productImages'],
+                    1,
+                    widget.productData['productQuantity'],
+                    widget.productData['productPrice'],
+                    widget.productData['vendorId'],
+                    'XL');
+
+                print(_cartProvider.getCartItems.values.first.productName);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.shopping_cart,
                         color: Colors.pink,
-                        letterSpacing: 3,
                       ),
-                    )
-                  ],
+                      Text(
+                        "ADD TO CART",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.pink,
+                          letterSpacing: 3,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

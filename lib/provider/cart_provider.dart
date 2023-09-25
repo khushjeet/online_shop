@@ -3,6 +3,7 @@ import 'package:uber_shop/models/car_model.dart';
 
 final cartProvider =
     StateNotifierProvider<CartNotifier, Map<String, CartModels>>(
+        //ref means reference of the cartNotifier
         (ref) => CartNotifier());
 
 class CartNotifier extends StateNotifier<Map<String, CartModels>> {
@@ -49,4 +50,7 @@ class CartNotifier extends StateNotifier<Map<String, CartModels>> {
       };
     }
   }
+
+  //Get cart item and it goes into cart inside it and we can use the cartModels
+  Map<String, CartModels> get getCartItems => state;
 }

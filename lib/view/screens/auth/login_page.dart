@@ -103,11 +103,11 @@ class _LoginPageState extends State<LoginPage> {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
+                        color: const Color.fromARGB(255, 163, 198, 249)),
                     //   color: Colors.pink,
                     child: _isloading
                         ? const CircularProgressIndicator(
-                            color: Colors.white,
+                            color: Color.fromARGB(255, 8, 159, 235),
                           )
                         : const Text(
                             "Log in",

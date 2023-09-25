@@ -3,20 +3,23 @@ class CartModels {
   final String productId;
   final List imageUrl;
 
-  int quantity = 0;
+  int quantity;
 
-  int productQuantity = 0;
+  int productQuantity;
 
   final double price;
 
   final String vendorId;
   final String productSize;
 
-  CartModels(
-      {required this.productName,
-      required this.productId,
-      required this.imageUrl,
-      required this.price,
-      required this.vendorId,
-      required this.productSize});
+  CartModels({
+    required this.productName,
+    required this.productId,
+    required this.imageUrl,
+    required this.price,
+    required this.vendorId,
+    required this.productSize,
+    required this.productQuantity,
+    required this.quantity,
+  });
 }
