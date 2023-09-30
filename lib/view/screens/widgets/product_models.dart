@@ -95,7 +95,9 @@ class _ProductModelState extends State<ProductModel> {
                 ],
               ),
             ),
-          )
+          ),
+          Positioned(child: IconButton(onPressed: () {},
+           icon: const Icon(Icons.favorite),),).
         ],
       ),
     );

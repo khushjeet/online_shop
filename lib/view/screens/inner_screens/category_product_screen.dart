@@ -88,8 +88,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                       Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
-                          // ignore: prefer_interpolation_to_compose_strings, unnecessary_string_escapes
-                          '\R' + productData['productPrice'].toStringAsFixed(2),
+                          productData['productPrice'].toStringAsFixed(2),
                           style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               letterSpacing: 4,

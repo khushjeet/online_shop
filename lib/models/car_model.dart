@@ -18,5 +18,7 @@ class CartModels {
       required this.imageUrl,
       required this.price,
       required this.vendorId,
-      required this.productSize});
+      required this.productSize,
+      required int productQuantity,
+      required int quantity});
 }

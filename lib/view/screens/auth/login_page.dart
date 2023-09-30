@@ -59,6 +59,24 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const Text(
+                  "Welcome ",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Color.fromARGB(255, 105, 121, 240),
+                      letterSpacing: 4),
+                ),
+                const Text(
+                  "In Market Visita ",
+                  style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 4),
+                ),
+                const SizedBox(
+                  height: 80,
+                ),
                 TextFormField(
                   onChanged: (value) {
                     email = value;
@@ -72,12 +90,21 @@ class _LoginPageState extends State<LoginPage> {
                     return null;
                   },
                   decoration: const InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
                     prefix: Icon(Icons.email),
                     labelText: "Email Address",
                     hintText: "Enter emal Address",
                   ),
                 ),
+                const SizedBox(
+                  height: 10,
+                ),
                 TextFormField(
+                  obscureText: true,
                   onChanged: (value) {
                     password = value;
                   },
@@ -89,7 +116,12 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   },
                   decoration: const InputDecoration(
-                      prefix: Icon(Icons.password),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      prefix: Icon(Icons.key),
                       labelText: "Password",
                       hintText: "Enter the password"),
                 ),
@@ -103,7 +135,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Colors.white),
+                        color: Colors.red),
                     //   color: Colors.pink,
                     child: _isloading
                         ? const CircularProgressIndicator(

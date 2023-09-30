@@ -1,19 +1,28 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:uber_shop/provider/cart_provider.dart';
+import 'package:uber_shop/provider/selected_sized_provider.dart';
 
-class ProductDetailScreen extends StatefulWidget {
+class ProductDetailScreen extends ConsumerStatefulWidget {
   final dynamic productData;
 
   const ProductDetailScreen({super.key, this.productData});
 
   @override
-  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+  // ignore: library_private_types_in_public_api
+  _ProductDetailScreenState createState() => _ProductDetailScreenState();
 }
 
-class _ProductDetailScreenState extends State<ProductDetailScreen> {
+class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   int imageIndex = 0;
   @override
   Widget build(BuildContext context) {
+    // ignore: no_leading_underscores_for_local_identifiers
+    final selectedSized = ref.watch(slelectedSizeProvider);
+    final _cartProvider = ref.read(cartProvider.notifier);
+    final cartItem = ref.watch(cartProvider);
+    final isInCart = cartItem.containsKey(widget.productData['productId']);
     return Scaffold(
       appBar: AppBar(
         elevation: 4,
@@ -145,7 +154,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         return Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: OutlinedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              final newSelected =
+                                  widget.productData['sizeList'][index];
+                              ref
+                                  .read(slelectedSizeProvider.notifier)
+                                  .selSelectedSize(newSelected);
+                            },
                             child: Text(
                               widget.productData['sizeList'][index],
                             ),
@@ -185,28 +200,44 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Icon(
-                      CupertinoIcons.shopping_cart,
-                      color: Colors.pink,
-                    ),
-                    Text(
-                      "ADD TO CART",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16,
-                        color: Colors.pink,
-                        letterSpacing: 3,
+            InkWell(
+              onTap: isInCart
+                  ? null
+                  : () {
+                      _cartProvider.addProductToCart(
+                          widget.productData['productName'],
+                          widget.productData['productId'],
+                          widget.productData['productImages'],
+                          1,
+                          widget.productData['productQuantity'],
+                          widget.productData['productPrice'],
+                          widget.productData['vendorId'],
+                          selectedSized);
+                      //  print(_cartProvider.getCartItems.values.first.productName);
+                    },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(
+                        CupertinoIcons.shopping_cart,
+                        color: isInCart ? Colors.green : Colors.pink,
                       ),
-                    )
-                  ],
+                      Text(
+                        isInCart ? "IN CART" : "ADD TO CART",
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                          color: Colors.pink,
+                          letterSpacing: 3,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ),
             ),

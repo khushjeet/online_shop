@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_shop/view/screens/auth/login_page.dart';
+import 'package:uber_shop/view/screens/auth/signup_page.dart';
 
 class AccountPage extends StatelessWidget {
   //const AccountPage({super.key});
@@ -82,7 +83,16 @@ class AccountPage extends StatelessWidget {
                       child: SizedBox(
                         width: 200,
                         child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return const SignUpPage();
+                                  },
+                                ),
+                              );
+                            },
                             child: const Text("Edit Profile")),
                       ),
                     ),
@@ -124,6 +134,13 @@ class AccountPage extends StatelessWidget {
                         style: TextStyle(fontWeight: FontWeight.w300),
                       ),
                     ),
+                    const ListTile(
+                      leading: Icon(CupertinoIcons.upload_circle),
+                      title: Text(
+                        "Registred As Shop",
+                        style: TextStyle(fontWeight: FontWeight.w300),
+                      ),
+                    ),
                     ListTile(
                       onTap: () async {
                         await _auth
@@ -137,7 +154,7 @@ class AccountPage extends StatelessWidget {
                                   ),
                                 ));
                       },
-                      leading: const Icon(CupertinoIcons.shopping_cart),
+                      leading: const Icon(CupertinoIcons.checkmark_seal),
                       title: const Text(
                         "Log Out",
                         style: TextStyle(
