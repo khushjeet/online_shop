@@ -96,8 +96,15 @@ class _ProductModelState extends State<ProductModel> {
               ),
             ),
           ),
-          Positioned(child: IconButton(onPressed: () {},
-           icon: const Icon(Icons.favorite),),).
+          Positioned(
+            right: 15,
+            top: 15,
+            child: IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.favorite),
+              color: Colors.red,
+            ),
+          ),
         ],
       ),
     );

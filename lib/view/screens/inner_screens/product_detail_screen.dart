@@ -205,14 +205,15 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   ? null
                   : () {
                       _cartProvider.addProductToCart(
-                          widget.productData['productName'],
-                          widget.productData['productId'],
-                          widget.productData['productImages'],
-                          1,
-                          widget.productData['productQuantity'],
-                          widget.productData['productPrice'],
-                          widget.productData['vendorId'],
-                          selectedSized);
+                        widget.productData['productName'],
+                        widget.productData['productId'],
+                        widget.productData['productImages'],
+                        1,
+                        widget.productData['productQuantity'],
+                        widget.productData['productPrice'],
+                        widget.productData['vendorId'],
+                        selectedSized,
+                      );
                       //  print(_cartProvider.getCartItems.values.first.productName);
                     },
               child: Container(
