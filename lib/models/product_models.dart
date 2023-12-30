@@ -1,9 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:get/get.dart';
+import 'package:uber_shop/provider/favorite_provider.dart';
 import 'package:uber_shop/view/screens/inner_screens/product_detail_screen.dart';
 
-class ProductModel extends StatefulWidget {
+class ProductModel extends ConsumerStatefulWidget {
   const ProductModel({
     super.key,
     required this.productData,
@@ -12,13 +14,17 @@ class ProductModel extends StatefulWidget {
   final QueryDocumentSnapshot<Object?> productData;
 
   @override
-  State<ProductModel> createState() => _ProductModelState();
+  // ignore: library_private_types_in_public_api
+  _ProductModelState createState() => _ProductModelState();
 }
 
-class _ProductModelState extends State<ProductModel> {
+class _ProductModelState extends ConsumerState<ProductModel> {
   @override
   Widget build(BuildContext context) {
     int imageIndex = 0;
+    // ignore: no_leading_underscores_for_local_identifiers
+    final _favoriteProvider = ref.read(favoriteProvider.notifier);
+    ref.watch(favoriteProvider);
     return GestureDetector(
       onTap: () {
         Get.to(
@@ -32,7 +38,7 @@ class _ProductModelState extends State<ProductModel> {
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Container(
-              height: 90,
+              height: 200,
               width: double.infinity,
               decoration: BoxDecoration(
                 border: Border.all(
@@ -43,17 +49,25 @@ class _ProductModelState extends State<ProductModel> {
                 ],
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: Row(
+              child: Column(
                 children: [
                   SizedBox(
-                    height: 60,
-                    width: 60,
+                    height: 90,
+                    width: 90,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10),
                       child: Image.network(
                         widget.productData['productImages'][imageIndex],
                         fit: BoxFit.cover,
                       ),
+                      // child: CachedNetworkImage(
+                      //   imageUrl: widget.productData['productImages']
+                      //       [imageIndex],
+                      //   fit: BoxFit.cover,
+                      //   placeholder: (context, url) =>
+                      //       // const CircularProgressIndicator(),
+                      //       // errorWidget: (context, url, error) =>
+                      //       const Icon(Icons.error),)
                     ),
                   ),
                   const SizedBox(
@@ -80,10 +94,8 @@ class _ProductModelState extends State<ProductModel> {
                       ),
                       Text(
                         // ignore: prefer_adjacent_string_concatenation
-                        "\$" +
-                            " " +
-                            widget.productData['productPrice']
-                                .toStringAsFixed(2),
+
+                        widget.productData['productPrice'].toStringAsFixed(2),
                         style: const TextStyle(
                           fontSize: 15,
                           fontWeight: FontWeight.bold,
@@ -100,9 +112,21 @@ class _ProductModelState extends State<ProductModel> {
             right: 15,
             top: 15,
             child: IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.favorite),
-              color: Colors.red,
+              onPressed: () {
+                _favoriteProvider.addProductToFavorite(
+                  widget.productData['productName'],
+                  widget.productData['productId'],
+                  widget.productData['productImages'],
+                  1,
+                  widget.productData['productQuantity'],
+                  widget.productData['productPrice'],
+                  widget.productData['vendorId'],
+                );
+              },
+              icon: _favoriteProvider.getFavoriteItem
+                      .containsKey(widget.productData['productId'])
+                  ? const Icon(Icons.favorite, color: Colors.red)
+                  : const Icon(Icons.favorite_border, color: Colors.red),
             ),
           ),
         ],

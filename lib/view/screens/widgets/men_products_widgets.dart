@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:uber_shop/view/screens/widgets/product_models.dart';
+import 'package:uber_shop/models/product_models.dart';
 
 class MenProductsWidgets extends StatelessWidget {
   const MenProductsWidgets({super.key});
@@ -32,16 +32,21 @@ class MenProductsWidgets extends StatelessWidget {
                   color: Colors.blueGrey),
             ),
           );
+        } else {
+          return SizedBox(
+            height: 200,
+            width: double.infinity,
+            child: GridView.builder(
+                itemCount: snapshot.data!.docs.length,
+                scrollDirection: Axis.horizontal,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1),
+                itemBuilder: (context, index) {
+                  final productData = snapshot.data!.docs[index];
+                  return ProductModel(productData: productData);
+                }),
+          );
         }
-        return SizedBox(
-          height: 100,
-          child: PageView.builder(
-              itemCount: snapshot.data!.docs.length,
-              itemBuilder: (context, index) {
-                final productData = snapshot.data!.docs[index];
-                return ProductModel(productData: productData);
-              }),
-        );
       },
     );
   }

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_shop/view/screens/inner_screens/category_product_screen.dart';
@@ -77,10 +78,20 @@ class CategoryPage extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image.network(
-                            categoryData['image'],
+                          // Image.network(
+                          //   categoryData['image'],
+                          //   width: 80,
+                          //   height: 80,
+                          // ),
+
+                          CachedNetworkImage(
+                            imageUrl: categoryData['image'],
                             width: 80,
                             height: 80,
+                            placeholder: (context, url) =>
+                                const CircularProgressIndicator(),
+                            errorWidget: (context, url, error) =>
+                                const Icon(Icons.error),
                           ),
                           const SizedBox(
                             height: 10,

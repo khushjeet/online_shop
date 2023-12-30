@@ -35,7 +35,7 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
 
             if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
-                child: CircularProgressIndicator(),
+                child: CircularProgressIndicator.adaptive(),
               );
             }
 
@@ -69,9 +69,8 @@ class _CategoryProductScreenState extends State<CategoryProductScreen> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: NetworkImage(
-                              productData['productImages'][0],
-                            ),
+                            image:
+                                NetworkImage(productData['productImages'][0]),
                           ),
                         ),
                       ),

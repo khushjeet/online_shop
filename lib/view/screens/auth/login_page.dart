@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:uber_shop/controllers/auth_controller/auth_controller.dart';
 import 'package:uber_shop/main_page.dart';
+import 'package:uber_shop/view/screens/auth/forget_password.dart';
 
 import 'signup_page.dart';
 
@@ -33,7 +34,16 @@ class _LoginPageState extends State<LoginPage> {
         setState(() {
           _isloading = false;
         });
-        Get.to(const MainPage());
+
+        // ignore: use_build_context_synchronously
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return const MainPage();
+            },
+          ),
+        );
         Get.snackbar('Login Sucessfull', 'You are now logined ',
             backgroundColor: Colors.pink, colorText: Colors.white);
       } else {
@@ -53,112 +63,146 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Center(
-          child: Form(
-            key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text(
-                  "Welcome ",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      color: Color.fromARGB(255, 105, 121, 240),
-                      letterSpacing: 4),
-                ),
-                const Text(
-                  "In Market Visita ",
-                  style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 4),
-                ),
-                const SizedBox(
-                  height: 80,
-                ),
-                TextFormField(
-                  onChanged: (value) {
-                    email = value;
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "Please login";
-                    } else {
-                      null;
-                    }
-                    return null;
-                  },
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(10),
-                      ),
+        child: SingleChildScrollView(
+          child: Center(
+            child: Form(
+              key: _formKey,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) {
+                            return const MainPage();
+                          },
+                        ),
+                      );
+                    },
+                    child: const Text(
+                      "Skip",
+                      style: TextStyle(fontSize: 10, color: Colors.blue),
                     ),
-                    prefix: Icon(Icons.email),
-                    labelText: "Email Address",
-                    hintText: "Enter emal Address",
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  obscureText: true,
-                  onChanged: (value) {
-                    password = value;
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return "please password";
-                    } else {
+                  const Text(
+                    "Welcome ",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Color.fromARGB(255, 105, 121, 240),
+                        letterSpacing: 4),
+                  ),
+                  const Text(
+                    "In Market Visita ",
+                    style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 4),
+                  ),
+                  const SizedBox(
+                    height: 80,
+                  ),
+                  TextFormField(
+                    onChanged: (value) {
+                      email = value;
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please login";
+                      } else {
+                        null;
+                      }
                       return null;
-                    }
-                  },
-                  decoration: const InputDecoration(
+                    },
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.all(
                           Radius.circular(10),
                         ),
                       ),
-                      prefix: Icon(Icons.key),
-                      labelText: "Password",
-                      hintText: "Enter the password"),
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-                InkWell(
-                  onTap: () {
-                    loginUser();
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.red),
-                    //   color: Colors.pink,
-                    child: _isloading
-                        ? const CircularProgressIndicator(
-                            color: Colors.white,
-                          )
-                        : const Text(
-                            "Log in",
-                            style: TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                letterSpacing: 4),
-                          ),
+                      prefix: Icon(Icons.email),
+                      labelText: "Email Address",
+                      hintText: "Enter emal Address",
+                    ),
                   ),
-                ),
-                TextButton(
-                    onPressed: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return const SignUpPage();
-                      }));
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    obscureText: true,
+                    onChanged: (value) {
+                      password = value;
                     },
-                    child: const Text("Create an Account"))
-              ],
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "please password";
+                      } else {
+                        return null;
+                      }
+                    },
+                    decoration: const InputDecoration(
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(10),
+                          ),
+                        ),
+                        prefix: Icon(Icons.key),
+                        labelText: "Password",
+                        hintText: "Enter the password"),
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      loginUser();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: Colors.red),
+                      //   color: Colors.pink,
+                      child: _isloading
+                          ? const CircularProgressIndicator(
+                              color: Colors.white,
+                            )
+                          : const Text(
+                              "Log in",
+                              style: TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 4),
+                            ),
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  SizedBox(
+                    child: TextButton(
+                        onPressed: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return const ForgetPassword();
+                          }));
+                        },
+                        child: const Text("Reset Password")),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return const SignUpPage();
+                        }));
+                      },
+                      child: const Text("Create an Account"))
+                ],
+              ),
             ),
           ),
         ),

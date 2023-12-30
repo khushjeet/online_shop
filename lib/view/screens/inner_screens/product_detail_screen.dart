@@ -1,8 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:uber_shop/provider/cart_provider.dart';
 import 'package:uber_shop/provider/selected_sized_provider.dart';
+import 'package:uber_shop/view/screens/inner_screens/cosumer_chat_screen.dart';
 
 class ProductDetailScreen extends ConsumerStatefulWidget {
   final dynamic productData;
@@ -18,8 +20,8 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
   int imageIndex = 0;
   @override
   Widget build(BuildContext context) {
-    // ignore: no_leading_underscores_for_local_identifiers
     final selectedSized = ref.watch(slelectedSizeProvider);
+    // ignore: no_leading_underscores_for_local_identifiers
     final _cartProvider = ref.read(cartProvider.notifier);
     final cartItem = ref.watch(cartProvider);
     final isInCart = cartItem.containsKey(widget.productData['productId']);
@@ -46,9 +48,17 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                   child: SizedBox(
                     height: 300,
                     width: MediaQuery.of(context).size.width,
-                    child: Image.network(
-                      widget.productData['productImages'][imageIndex],
+                    // child: Image.network(
+                    //   widget.productData['productImages'][imageIndex],
+                    //   fit: BoxFit.cover,
+                    // ),
+                    child: CachedNetworkImage(
+                      imageUrl: widget.productData['productImages'][imageIndex],
                       fit: BoxFit.cover,
+                      placeholder: (context, url) =>
+                          const CircularProgressIndicator(),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
                     ),
                   ),
                 ),
@@ -75,8 +85,17 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
                               decoration: BoxDecoration(
                                 border: Border.all(),
                               ),
-                              child: Image.network(
-                                widget.productData['productImages'][imageIndex],
+                              // child: Image.network(
+                              //   widget.productData['productImages'][imageIndex],
+                              // ),
+                              child: CachedNetworkImage(
+                                imageUrl: widget.productData['productImages']
+                                    [imageIndex],
+                                fit: BoxFit.cover,
+                                placeholder: (context, url) =>
+                                    const CircularProgressIndicator(),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
                               ),
                             ),
                           ),
@@ -243,7 +262,16 @@ class _ProductDetailScreenState extends ConsumerState<ProductDetailScreen> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return const ConsumerChatScreen();
+                    },
+                  ),
+                );
+              },
               icon: const Icon(
                 CupertinoIcons.chat_bubble,
                 color: Colors.pink,

@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:uber_shop/models/car_model.dart';
+import 'package:uber_shop/models/cart_model.dart';
 
 final cartProvider =
     StateNotifierProvider<CartNotifier, Map<String, CartModels>>(
@@ -48,6 +48,43 @@ class CartNotifier extends StateNotifier<Map<String, CartModels>> {
         )
       };
     }
+  }
+
+  //increment in cart
+
+  void incrementItems(String productId) {
+    if (state.containsKey(productId)) {
+      state[productId]!.quantity++;
+      //notifier the state
+
+      state = {...state};
+    }
+  }
+
+  void decrementItems(String productId) {
+    if (state.containsKey(productId)) {
+      state[productId]!.quantity--;
+
+      state = {...state};
+    }
+  }
+
+  void removeAllItem() {
+    state.clear();
+    state = {...state};
+  }
+
+  double calculateTotalAmount() {
+    double totalAmount = 0.0;
+    state.forEach((productId, cartItem) {
+      totalAmount += cartItem.quantity * cartItem.price;
+    });
+    return totalAmount;
+  }
+
+  void removeItems(String productId) {
+    state.remove(productId);
+    state = {...state};
   }
 
   Map<String, CartModels> get getCartItems => state;

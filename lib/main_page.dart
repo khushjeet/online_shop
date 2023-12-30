@@ -19,7 +19,7 @@ class _MainPageState extends State<MainPage> {
     const CategoryPage(),
     const CartPage(),
     const FavoritesPage(),
-    AccountPage()
+    const AccountPage()
   ];
   @override
   Widget build(BuildContext context) {
@@ -62,7 +62,7 @@ class _MainPageState extends State<MainPage> {
                 label: 'FAVORITES'),
             BottomNavigationBarItem(
                 icon: Image.asset(
-                  "assets/icons/4.png",
+                  "assets/icons/5.png",
                   width: 20,
                 ),
                 label: 'ACCOUNTS'),

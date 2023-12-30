@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AuthController {
@@ -20,7 +21,11 @@ class AuthController {
 
     if (_file != null) {
       return await _file.readAsBytes();
-    } else {}
+    } else if (_file == null) {
+      return const Dialog(
+        child: Text("Please Select Image"),
+      );
+    }
   }
 
   //Function to upload image to firebase Storage
@@ -49,7 +54,7 @@ class AuthController {
           .doc(userCredential.user!.uid)
           .set({
         'fullName': fullName,
-        'emai': email,
+        'email': email,
         'buyerId': userCredential.user!.uid,
         'profileImage': downloadUrl,
       });

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:uber_shop/view/screens/widgets/product_models.dart';
+import 'package:uber_shop/models/product_models.dart';
 
 class HomeProducts extends StatelessWidget {
   const HomeProducts({super.key});

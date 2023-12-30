@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -41,15 +42,18 @@ class _BannerWidgtsState extends State<BannerWidgts> {
           return Builder(builder: (context) {
             return SizedBox(
               width: MediaQuery.of(context).size.width - 20,
-              child: Image.network(
-                e,
-                scale: 5,
+              child: CachedNetworkImage(
+                imageUrl: e,
+                fit: BoxFit.cover,
+                placeholder: (context, url) =>
+                    const CircularProgressIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
               ),
             );
           });
         }).toList(),
         options: CarouselOptions(
-          height: 200,
+          height: 150,
           aspectRatio: 16 / 9,
           viewportFraction: 0.8,
           initialPage: 0,
